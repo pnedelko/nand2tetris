@@ -14,4 +14,31 @@ CHIP Xor {
 
     PARTS:
     // Put your code here:
+    Nand(a=a, b=b, out=o1);
+    Or(a=a, b=b, out=o2);
+    And(a=o1, b=o2, out=out);
 }
+
+// and
+// 0 0 0
+// 0 1 0
+// 1 0 0
+// 1 1 1
+
+// nand
+// 0 0 1
+// 0 1 1
+// 1 0 1
+// 1 1 0
+
+// or
+// 0 0 0
+// 0 1 1
+// 1 0 1
+// 1 1 1
+
+// xor
+// 0 0 0
+// 0 1 1
+// 1 0 1
+// 1 1 0
