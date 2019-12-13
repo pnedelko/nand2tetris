@@ -60,9 +60,11 @@ func (p *Parser) Symbol() string {
 }
 
 func (p *Parser) Dest() string {
-	if strings.Index(p.currentCommand, "=") >= 0 {
+	if strings.Index(p.currentCommand, "=") > 0 {
 		res := strings.Split(p.currentCommand, "=")
 		return res[0]
+	} else if strings.Index(p.currentCommand, ";") > 0 {
+		return "null"
 	}
 	return ""
 }
@@ -71,10 +73,19 @@ func (p *Parser) Comp() string {
 	if strings.Index(p.currentCommand, "=") >= 0 {
 		res := strings.Split(p.currentCommand, "=")
 		return res[1]
+	} else if strings.Index(p.currentCommand, ";") >= 0 {
+		res := strings.Split(p.currentCommand, ";")
+		return res[0]
 	}
 	return ""
 }
 
 func (p *Parser) Jump() string {
+	if strings.Index(p.currentCommand, "=") >= 0 {
+		return "null"
+	} else if strings.Index(p.currentCommand, ";") >= 0 {
+		res := strings.Split(p.currentCommand, ";")
+		return res[1]
+	}
 	return ""
 }

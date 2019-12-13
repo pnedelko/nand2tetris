@@ -65,7 +65,8 @@ func main() {
 		} else if p.CommandType() == parser.CCommand {
 			comp := code.Comp(p.Comp())
 			dest := code.Dest(p.Dest())
-			line := fmt.Sprintf("111" + fmt.Sprintf("%07b", comp) + fmt.Sprintf("%03b", dest) + "000\n")
+			jump := code.Jump(p.Jump())
+			line := fmt.Sprintf("111" + fmt.Sprintf("%07b", comp) + fmt.Sprintf("%03b", dest) + fmt.Sprintf("%03b", jump) + "\n")
 			_, err := w.WriteString(line)
 			check(err)
 		} else {
