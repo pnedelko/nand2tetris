@@ -21,6 +21,10 @@ func NewParser(file *os.File) *Parser {
 	return &Parser{scanner, ""}
 }
 
+func (p *Parser) CurrentCommand() string {
+	return p.currentCommand
+}
+
 func (p *Parser) HasMoreCommands() bool {
 	// if err := scanner.Err(); err != nil {
 	// 	log.Fatal(err)
@@ -31,20 +35,26 @@ func (p *Parser) HasMoreCommands() bool {
 
 func (p *Parser) Advance() {
 	line := p.scanner.Text()
+	commentIndex := strings.Index(line, "//")
+	if commentIndex >= 0 {
+		line = line[0:commentIndex]
+	}
 	p.currentCommand = strings.TrimSpace(line)
 }
 
 func (p *Parser) CommandType() string {
-	if p.currentCommand == "" {
+	cmd := p.currentCommand
+
+	if cmd == "" {
 		return ""
 	}
 
-	if strings.Index(p.currentCommand, "//") >= 0 {
-		return ""
-	}
-
-	if strings.Index(p.currentCommand, "@") == 0 {
+	if strings.Index(cmd, "@") == 0 {
 		return ACommand
+	}
+
+	if strings.Index(cmd, "(") == 0 && strings.Index(cmd, ")") == len(cmd)-1 {
+		return LCommand
 	}
 
 	return CCommand
