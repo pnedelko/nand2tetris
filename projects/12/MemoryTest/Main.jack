@@ -14,6 +14,8 @@ class Main {
         do Memory.poke(8000, 333);       // RAM[8000] = 333
         let temp = Memory.peek(8000);
         do Memory.poke(8001, temp + 1);  // RAM[8001] = 334
+        // do Output.printString("Done");
+        // do Output.println();
         
         let a = Array.new(3);            // uses Memory.alloc
         let a[2] = 222;
